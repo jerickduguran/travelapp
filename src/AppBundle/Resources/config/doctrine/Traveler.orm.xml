@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="AppBundle\Entity\Traveler" table="jlm__traveler">
+    <id name="id" type="integer" column="id">
+      <generator strategy="AUTO"/>
+    </id>
+    <field name="firstName" type="string" column="first_name" length="60"/>
+    <field name="lastName" type="string" column="last_name" length="60"/>
+    <field name="gender" type="string" column="gender" length="6" nullable="true"/>
+    <field name="birthdate" type="date" column="birthdate" nullable="true"/>
+    <field name="contactNumber" type="string" length="60"  column="contact_number" nullable="false"/>
+    <field name="telephoneNumber" type="string" length="60"  column="telephone_number" nullable="true"/>
+    <field name="email" type="string" length="150" column="email" nullable="true"/>
+    <field name="createdAt" type="datetime" column="created_at"/>
+    <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
+
+      <one-to-many field="flights" target-entity="AppBundle\Entity\FlightTraveler" mapped-by="traveler" >
+          <cascade><cascade-persist /></cascade>
+      </one-to-many>
+
+      <many-to-one field="travelAgent" target-entity="Application\Sonata\UserBundle\Entity\User" inversed-by="travelers">
+          <join-column name="travel_agent_id" referenced-column-name="id" on-delete="CASCADE"/>
+          <cascade>
+              <cascade-persist/>
+          </cascade>
+      </many-to-one>
+
+      <many-to-one  field="profilePicture" target-entity="Application\Sonata\MediaBundle\Entity\Media">
+          <join-column name="profile_picture_id" referenced-column-name="id"/>
+          <cascade>
+              <cascade-detach/>
+          </cascade>
+      </many-to-one>
+
+      <one-to-many field="personalRatings" target-entity="AppBundle\Entity\Rate" mapped-by="traveler" >
+          <cascade><cascade-persist /></cascade>
+      </one-to-many>
+
+      <lifecycle-callbacks>
+          <lifecycle-callback type="prePersist" method="prePersist" />
+          <lifecycle-callback type="preUpdate" method="preUpdate" />
+      </lifecycle-callbacks>
+
+  </entity>
+</doctrine-mapping>

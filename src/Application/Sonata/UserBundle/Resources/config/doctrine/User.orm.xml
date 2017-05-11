@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                  http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="Application\Sonata\UserBundle\Entity\User" table="fos_user_user">
+
+        <id name="id" column="id" type="integer">
+            <generator strategy="AUTO" />
+        </id>
+
+        <field name="accessCode" column="access_code" type="string" length="30" nullable="true" unique="true"/>
+
+        <field name="activatedDate" column="activated_date" type="datetime" nullable="true"/>
+        <field name="telephoneNumber" column="telephone_number" type="string" length="60" nullable="true"/>
+
+        <one-to-many field="flights" target-entity="AppBundle\Entity\Flight" mapped-by="travelAgent" >
+            <cascade><cascade-persist /></cascade>
+        </one-to-many>
+
+        <one-to-many field="travelers" target-entity="AppBundle\Entity\Traveler" mapped-by="travelAgent" >
+            <cascade><cascade-persist /></cascade>
+        </one-to-many>
+
+        <many-to-one  field="profilePicture" target-entity="Application\Sonata\MediaBundle\Entity\Media">
+            <join-column name="profile_picture_id" referenced-column-name="id"/>
+            <cascade>
+                <cascade-detach/>
+            </cascade>
+        </many-to-one>
+
+    </entity>
+
+</doctrine-mapping>

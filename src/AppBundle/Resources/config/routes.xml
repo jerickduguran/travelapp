@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<routes xmlns="http://friendsofsymfony.github.com/schema/rest"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://friendsofsymfony.github.com/schema/rest http://friendsofsymfony.github.com/schema/rest/routing-1.0.xsd">
+
+    <import
+            id="auth"
+            type="rest"
+            resource="AppBundle\Controller\API\AuthController" />
+
+
+    <import
+            id="users"
+            type="rest"
+            resource="AppBundle\Controller\API\UsersController" />
+
+    <import
+            id="user_flights"
+            type="rest"
+            parent="users"
+            resource="AppBundle\Controller\API\FlightsController" />
+
+    <import
+            id="user_flight_itineraries"
+            type="rest"
+            parent="user_flights"
+            resource="AppBundle\Controller\API\ItinerariesController" />
+
+    <import
+            id="flight_travelers"
+            type="rest"
+            parent="user_flights"
+            resource="AppBundle\Controller\API\FlightTravelersController" />
+
+    <import
+            id="traveler"
+            type="rest"
+            parent="users"
+            resource="AppBundle\Controller\API\TravelersController" />
+    <import
+            id="promo"
+            type="rest"
+            resource="AppBundle\Controller\API\PromoController" />
+
+    <import
+            id="user_ratings"
+            type="rest"
+            parent="users"
+            resource='AppBundle\Controller\API\RatingsController' />
+    <!--
+        <import
+                id="user_topic_comments"
+                type="rest"
+                parent="user_topics"
+                resource="FOS\RestBundle\Tests\Fixtures\Controller\UserTopicCommentsController" />
+    -->
+</routes>

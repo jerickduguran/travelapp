@@ -1,0 +1,46 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <service id="app.api.service" class="AppBundle\Services\API">
+            <argument id="sonata.user.orm.user_manager" type="service"></argument>
+            <argument id="app.entity_manager.flight" type="service"></argument>
+            <argument id="app.entity_manager.flight_traveler" type="service"></argument>
+            <argument id="app.entity_manager.traveler" type="service"></argument>
+            <argument id="service_container" type="service"></argument>
+            <argument id="app.entity_manager.rate" type="service"></argument>
+        </service>
+
+        <service id="app.entity_manager.flight" class="AppBundle\Entity\Manager\FlightManager">
+            <argument type="service" id="doctrine.orm.default_entity_manager" />
+            <argument>AppBundle\Entity\Flight</argument>
+        </service>
+
+        <service id="app.entity_manager.flight_traveler" class="AppBundle\Entity\Manager\FlightTravelerManager">
+            <argument type="service" id="doctrine.orm.default_entity_manager" />
+            <argument>AppBundle\Entity\FlightTraveler</argument>
+        </service>
+
+        <service id="app.entity_manager.traveler" class="AppBundle\Entity\Manager\TravelerManager">
+            <argument type="service" id="doctrine.orm.default_entity_manager" />
+            <argument>AppBundle\Entity\Traveler</argument>
+        </service>
+
+
+        <service id="app.entity_manager.promo" class="AppBundle\Entity\Manager\PromoManager">
+            <argument type="service" id="doctrine.orm.default_entity_manager" />
+            <argument>AppBundle\Entity\Promo</argument>
+        </service>
+
+        <service id="app.entity_manager.rate" class="AppBundle\Entity\Manager\RateManager">
+            <argument type="service" id="doctrine.orm.default_entity_manager" />
+            <argument>AppBundle\Entity\Rate</argument>
+        </service>
+
+    </services>
+
+</container>

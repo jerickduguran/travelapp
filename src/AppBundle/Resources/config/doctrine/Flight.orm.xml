@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="AppBundle\Entity\Flight" table="jlm__flight">
+    <id name="id" type="integer" column="id">
+      <generator strategy="AUTO"/>
+    </id>
+    <field name="title" type="string" column="title" length="255"/>
+    <field name="origin" type="string" column="origin" length="255"/>
+    <field name="destination" type="string" column="destination" length="255"/>
+    <field name="originDepartureSchedule" type="datetime" column="origin_departure_schedule" nullable="true"/>
+    <field name="destinationArrivalSchedule" type="datetime" column="destination_arrival_schedule" nullable="true"/>
+    <field name="destinationDepartureSchedule" type="datetime" column="destination_departure_schedule" nullable="true"/>
+    <field name="originArrivalSchedule" type="datetime" column="origin_arrival_schedule" nullable="true"/>
+    <field name="originDepartureCalendarNote" type="text" column="origin_departure_calendar_note" nullable="true"/>
+    <field name="destinationDepartureCalendarNote" type="text" column="destination_departure_calendar_note" nullable="true"/>
+    <field name="originTimezone" type="string" length="60" column="origin_timezone"/>
+    <field name="destinationTimezone" type="string" length="60" column="destination_timezone"/>
+    <field name="createdAt" type="datetime" column="created_at"/>
+    <field name="updatedAt" type="datetime" column="updated_at" nullable="true"/>
+
+      <one-to-many field="itineraries" target-entity="AppBundle\Entity\FlightItinerary" mapped-by="flight" >
+          <cascade><cascade-persist /></cascade>
+      </one-to-many>
+
+      <one-to-many field="connectingFlights" target-entity="AppBundle\Entity\FlightConnecting" mapped-by="flight" >
+          <cascade><cascade-persist /></cascade>
+      </one-to-many>
+
+      <one-to-many field="travelers" target-entity="AppBundle\Entity\FlightTraveler" mapped-by="flight" >
+          <cascade><cascade-persist /></cascade>
+      </one-to-many>
+
+      <many-to-one field="travelAgent" target-entity="Application\Sonata\UserBundle\Entity\User" inversed-by="flights">
+          <join-column name="travel_agent_id" referenced-column-name="id" on-delete="CASCADE"/>
+          <cascade>
+              <cascade-persist/>
+          </cascade>
+      </many-to-one>
+
+      <lifecycle-callbacks>
+          <lifecycle-callback type="prePersist" method="prePersist" />
+          <lifecycle-callback type="preUpdate" method="preUpdate" />
+      </lifecycle-callbacks>
+
+  </entity>
+</doctrine-mapping>

@@ -1,0 +1,76 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+
+    <services>
+        <service id="app.admin.flight" class="AppBundle\Admin\FlightAdmin">
+            <argument/>
+            <argument>AppBundle\Entity\Flight</argument>
+            <argument>SonataAdminBundle:CRUD</argument>
+            <tag name="sonata.admin" manager_type="orm" group="admin" label="Flights"/>
+            <call method="addChild">
+                <argument type="service" id="app.admin.flight_itinerary"/>
+            </call>
+            <call method="addChild">
+                <argument type="service" id="app.admin.flight_traveler"/>
+            </call>
+            <call method="addChild">
+                <argument type="service" id="app.admin.flight_connecting"/>
+            </call>
+        </service>
+        <service id="app.admin.flight_itinerary" class="AppBundle\Admin\FlightItineraryAdmin">
+            <argument/>
+            <argument>AppBundle\Entity\FlightItinerary</argument>
+            <argument>SonataAdminBundle:CRUD</argument>
+            <tag name="sonata.admin" manager_type="orm" group="admin" label="Flight Itinerary"/>
+        </service>
+        <service id="app.admin.flight_connecting" class="AppBundle\Admin\FlightConnectingAdmin">
+            <argument/>
+            <argument>AppBundle\Entity\FlightConnecting</argument>
+            <argument>SonataAdminBundle:CRUD</argument>
+            <tag name="sonata.admin" manager_type="orm" group="admin" label="Connecting Flights"/>
+        </service>
+        <service id="app.admin.flight_traveler" class="AppBundle\Admin\FlightTravelerAdmin">
+            <argument/>
+            <argument>AppBundle\Entity\FlightTraveler</argument>
+            <argument>SonataAdminBundle:CRUD</argument>
+            <tag name="sonata.admin" manager_type="orm" group="admin" label="Flight Travelers"/>
+        </service>
+        <service id="app.admin.traveler" class="AppBundle\Admin\TravelerAdmin">
+            <argument/>
+            <argument>AppBundle\Entity\Traveler</argument>
+            <argument>SonataAdminBundle:CRUD</argument>
+            <tag name="sonata.admin" manager_type="orm" group="admin" label="Travelers"/>
+        </service>
+
+
+        <service id="app.admin.promo" class="AppBundle\Admin\PromoAdmin">
+            <argument/>
+            <argument>AppBundle\Entity\Promo</argument>
+            <argument>SonataAdminBundle:CRUD</argument>
+            <tag name="sonata.admin" manager_type="orm" group="admin" label="Promos"/>
+
+            <call method="addChild">
+                <argument type="service" id="app.admin.promo_support"/>
+            </call>
+        </service>
+
+        <service id="app.admin.promo_support" class="AppBundle\Admin\PromoSupportAdmin">
+            <argument/>
+            <argument>AppBundle\Entity\PromoSupport</argument>
+            <argument>SonataAdminBundle:CRUD</argument>
+            <tag name="sonata.admin" manager_type="orm" group="admin" label="Promo Child"/>
+        </service>
+
+        <service id="app.admin.rate" class="AppBundle\Admin\RateAdmin">
+            <argument/>
+            <argument>AppBundle\Entity\Rate</argument>
+            <argument>SonataAdminBundle:CRUD</argument>
+            <tag name="sonata.admin" manager_type="orm" group="admin" label="Ratings"/>
+        </service>
+    </services>
+
+</container>
